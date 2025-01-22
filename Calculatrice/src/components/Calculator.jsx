@@ -1,58 +1,80 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import Display from './Display.jsx';
 import NumberPad from './NumberPad.jsx';
 import OperatorPad from './OperatorPad.jsx';
 
+const initialState = {
+    currentInput: '',
+    previousInput: '',
+    operator: '',
+    result: null,
+};
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'ADD_NUMBER':
+            return { ...state, currentInput: state.currentInput + action.payload };
+        case 'SET_OPERATOR':
+            if (state.currentInput === '') return state;
+            return {
+                ...state,
+                previousInput: state.currentInput,
+                currentInput: '',
+                operator: action.payload,
+            };
+        case 'EQUAL':
+            if (state.currentInput === '' || state.previousInput === '') return state;
+            let computation;
+            switch (state.operator) {
+                case '+':
+                    computation = parseFloat(state.previousInput) + parseFloat(state.currentInput);
+                    break;
+                case '-':
+                    computation = parseFloat(state.previousInput) - parseFloat(state.currentInput);
+                    break;
+                case '*':
+                    computation = parseFloat(state.previousInput) * parseFloat(state.currentInput);
+                    break;
+                default:
+                    return state;
+            }
+            return {
+                ...state,
+                result: computation,
+                currentInput: String(computation),
+                previousInput: '',
+                operator: '',
+            };
+        case 'RESET':
+            return initialState;
+        default:
+            return state;
+    }
+};
+
 const Calculator = () => {
-    const [currentInput, setCurrentInput] = useState('');
-    const [previousInput, setPreviousInput] = useState('');
-    const [operator, setOperator] = useState('');
-    const [result, setResult] = useState(null);
+    const [state, dispatch] = useReducer(reducer, initialState);
 
     const handleNumberClick = (num) => {
-        setCurrentInput(prev => prev + num);
+        dispatch({ type: 'ADD_NUMBER', payload: num });
     };
 
     const handleOperatorClick = (op) => {
-        if (currentInput === '') return;
-        setPreviousInput(currentInput);
-        setCurrentInput('');
-        setOperator(op);
+        dispatch({ type: 'SET_OPERATOR', payload: op });
     };
 
     const handleEqualClick = () => {
-        if (currentInput === '' || previousInput === '') return;
-        let computation;
-        switch (operator) {
-            case '+':
-                computation = parseFloat(previousInput) + parseFloat(currentInput);
-                break;
-            case '-':
-                computation = parseFloat(previousInput) - parseFloat(currentInput);
-                break;
-            case '*':
-                computation = parseFloat(previousInput) * parseFloat(currentInput);
-                break;
-            default:
-                return;
-        }
-        setResult(computation);
-        setCurrentInput(String(computation));
-        setPreviousInput('');
-        setOperator('');
+        dispatch({ type: 'EQUAL' });
     };
 
     const handleReset = () => {
-        setCurrentInput('');
-        setPreviousInput('');
-        setOperator('');
-        setResult(null);
+        dispatch({ type: 'RESET' });
     };
 
     return (
         <div className="calculator">
             <h2>Calculatrice</h2>
-            <Display currentInput={currentInput} result={result} />
+            <Display currentInput={state.currentInput} result={state.result} />
             <div className="pad-container">
                 <NumberPad onClick={handleNumberClick} />
                 <OperatorPad
