@@ -40,3 +40,55 @@
 .read-the-docs {
   color: #888;
 }
+
+.calculator {
+  width: 350px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 2px solid #333;
+  border-radius: 10px;
+  background-color: #f4f4f4;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.display {
+  width: 100%;
+  height: 50px;
+  background-color: #222;
+  border-radius: 5px;
+  color: white;
+  text-align: right;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.pad-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.number-pad,
+.operator-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+button {
+  padding: 0 15px;
+  font-size: 1.2rem;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #555;
+}
