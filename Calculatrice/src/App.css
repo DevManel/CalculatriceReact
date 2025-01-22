@@ -3,6 +3,7 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .logo {
@@ -42,29 +43,37 @@
 }
 
 .calculator {
-  width: 350px;
+  width: 320px;
   margin: 50px auto;
-  padding: 20px;
-  border: 2px solid #333;
-  border-radius: 10px;
-  background-color: #f4f4f4;
+  padding: 2rem;
+  border: 2px solid #4CAF50;
+  border-radius: 15px;
+  background-color: #222;
   text-align: center;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
 h2 {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
+  color: #4CAF50;
   margin-bottom: 20px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .display {
   width: 100%;
-  height: 50px;
-  background-color: #222;
-  border-radius: 5px;
+  height: 60px;
+  background-color: #333;
   color: white;
   text-align: right;
-  font-size: 1.5rem;
+  font-size: 2rem;
   margin-bottom: 20px;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  word-wrap: break-word;
 }
 
 .pad-container {
@@ -91,4 +100,23 @@ button {
 
 button:hover {
   background-color: #555;
+  transform: scale(1.1);
+}
+
+button:active {
+  background-color: #4CAF50;
+  transform: scale(1);
+}
+
+/* Style pour les boutons d'opération */
+.operator-pad button {
+  background-color: #ff6f61;
+}
+
+.operator-pad button:hover {
+  background-color: #ff5b47;
+}
+
+.operator-pad button:active {
+  background-color: #e55c4f;
 }
